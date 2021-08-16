@@ -11,6 +11,12 @@ import (
 	sfpl "local.com/leobrada/ztsfc_http_sfpLogic/sfp_logic"
 )
 
+const (
+	// @author:marie
+	// Request URI for the API endpoint. Consists of version number and resource name.
+	endpointName = "/v1/sfp"
+)
+
 type Router struct {
 	frontend_tls_config *tls.Config
 	frontend_server     *http.Server
@@ -54,7 +60,7 @@ func NewRouter() *Router {
 
 	// Create MUX server
 	mux := http.NewServeMux()
-	mux.Handle("/", router)
+	mux.Handle(endpointName, router)
 
 	// Create HTTP frontend server
 	router.frontend_server = &http.Server{

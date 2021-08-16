@@ -21,7 +21,7 @@ func TransformSFCintoSFP(cpm *md.Cp_metadata) {
 		return
 	}
 
-	// @author marie:
+	// @author:marie
 	// removed translation into ip addresses, because this is currently not useful from the PEP's perspective.
 	// Thus, function simply returns SFC as SFP.
 	cpm.SFP = cpm.SFC
