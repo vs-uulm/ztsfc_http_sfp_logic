@@ -3,6 +3,7 @@ package router
 import (
 	"crypto/tls"
 	"crypto/x509"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -83,9 +84,10 @@ func (router *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 
 	sfpl.TransformSFCintoSFP(md)
 
-	//    fmt.Printf("%s\n", md.SFP)
-	w.Header().Set("sfp", md.SFP)
-	fmt.Fprintf(w, "")
+	// @author:marie
+	// Encode SFP as json and set header respectively
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(md.SFP)
 }
 
 func (router *Router) ListenAndServeTLS() error {

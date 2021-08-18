@@ -17,7 +17,7 @@ func TransformSFCintoSFP(cpm *md.Cp_metadata) {
 	}
 
 	if len(cpm.SFC) == 0 {
-		cpm.SFP = ""
+		cpm.SFP = []string{}
 		return
 	}
 

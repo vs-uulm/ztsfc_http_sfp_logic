@@ -5,14 +5,15 @@ import (
 )
 
 type Cp_metadata struct {
-	SFC string
-	SFP string
+	SFC []string
+	SFP []string
 }
 
 func (cpm *Cp_metadata) ExtractMetadata(req *http.Request) {
 
 	// @author:marie
 	// Retreive parameters from query instead from custom headers
-	cpm.SFC = req.URL.Query().Get("sfc")
+	// (sfc is transmitted as a list of several sf)
+	cpm.SFC = req.URL.Query()["sf"]
 	// cpm.SFC = req.Header.Get("sfc")
 }
