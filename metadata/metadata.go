@@ -13,7 +13,7 @@ func (cpm *Cp_metadata) ExtractMetadata(req *http.Request) {
 
 	// @author:marie
 	// Retreive parameters from query instead from custom headers
-	// (sfc is transmitted as a list of several sf)
+	// (SFC is transmitted as a list of several SFs)
 	cpm.SFC = req.URL.Query()["sf"]
 	// cpm.SFC = req.Header.Get("sfc")
 }

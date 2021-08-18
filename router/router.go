@@ -75,6 +75,10 @@ func NewRouter() *Router {
 	return router
 }
 
+type sfpResponse struct {
+	SFP []string `json:"sfp"`
+}
+
 func (router *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	//fmt.Printf("%+v\n", req.Header)
 
@@ -87,7 +91,10 @@ func (router *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	// @author:marie
 	// Encode SFP as json and set header respectively
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(md.SFP)
+	response := sfpResponse{
+		SFP: md.SFP,
+	}
+	json.NewEncoder(w).Encode(response)
 }
 
 func (router *Router) ListenAndServeTLS() error {
