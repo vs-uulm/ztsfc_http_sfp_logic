@@ -5,8 +5,12 @@ import (
 )
 
 type Cp_metadata struct {
-	SFC []string
-	SFP []string
+	SFC []string `json:"sfc"`
+	SFP []SF     `json:"sfp"`
+}
+type SF struct {
+	Name    string `json:"name"`
+	Address string `json:"address"`
 }
 
 func (cpm *Cp_metadata) ExtractMetadata(req *http.Request) {
