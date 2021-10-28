@@ -1,35 +1,23 @@
 package metadata
 
 import (
-//    "fmt"
-    "net/http"
+	"net/http"
 )
 
 type Cp_metadata struct {
-    //Auth_decision bool
-    //User string
-    //Pw_authenticated bool
-    //Cert_authenticated bool
-    //Resource string
-    //Action string
-    //Device string
-    //RequestToday int
-    //FailedToday int
-    //Location string
-    SFC string
-    SFP string
+	SFC []string `json:"sfc"`
+	SFP []SF     `json:"sfp"`
+}
+type SF struct {
+	Name    string `json:"name"`
+	Address string `json:"address"`
 }
 
 func (cpm *Cp_metadata) ExtractMetadata(req *http.Request) {
-    //cpm.User = req.Header.Get("user")
-    //cpm.Pw_authenticated, _ = strconv.ParseBool(req.Header.Get("pwAuthenticated"))
-    //cpm.Cert_authenticated, _ = strconv.ParseBool(req.Header.Get("certAuthenticated"))
-    //cpm.Resource = req.Header.Get("resource")
-    //cpm.Action = req.Header.Get("action")
-    //cpm.Device = req.Header.Get("device")
-    //cpm.RequestToday, _ = strconv.Atoi(req.Header.Get("requestToday"))
-    //cpm.FailedToday, _ = strconv.Atoi(req.Header.Get("failedToday"))
-    //cpm.Location = req.Header.Get("location")
-    cpm.SFC = req.Header.Get("sfc")
-//    fmt.Printf("%s\n", cpm.SFC)
+
+	// @author:marie
+	// Retreive parameters from query instead from custom headers
+	// (SFC is transmitted as a list of several SFs)
+	cpm.SFC = req.URL.Query()["sf"]
+	// cpm.SFC = req.Header.Get("sfc")
 }
