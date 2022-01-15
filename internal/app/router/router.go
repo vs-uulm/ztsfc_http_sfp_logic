@@ -8,12 +8,11 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	metadata "local.com/leobrada/ztsfc_http_sfpLogic/metadata"
-	sfpl "local.com/leobrada/ztsfc_http_sfpLogic/sfp_logic"
+	md "github.com/vs-uulm/ztsfc_http_sfp_logic/internal/app/metadata"
+	sfpl "github.com/vs-uulm/ztsfc_http_sfp_logic/internal/app/sfp_logic"
 )
 
 const (
-	// @author:marie
 	// Request URI for the API endpoint. Consists of version number and resource name.
 	endpointName = "/v1/sfp"
 )
@@ -28,8 +27,7 @@ type Router struct {
 	//    md         *metadata.Cp_metadata
 }
 
-func NewRouter() *Router {
-
+func NewRouter() (*Router, error) {
 	// Create new Router
 	router := new(Router)
 
@@ -38,13 +36,11 @@ func NewRouter() *Router {
 	router.certs_that_router_accepts = x509.NewCertPool()
 	ca_cert, err := ioutil.ReadFile("./certs/bwnet_root.pem")
 	if err != nil {
-		fmt.Print("[Router.makeCAPool]: ReadFile: ", err)
-		return nil
+		return nil, fmt.Errorf("router: NewRouter(): could not read root CA certificate: %v", err)
 	}
 	ok := router.certs_that_router_accepts.AppendCertsFromPEM(ca_cert)
 	if !ok {
-		fmt.Print("[Router.makeCAPool]: AppendCertsFromPEM: ", err)
-		return nil
+		return nil, fmt.Errorf("router: NewRouter(): could not append root CA certificate to cert pool")
 	}
 
 	// Create TLS config for frontend server
@@ -70,21 +66,16 @@ func NewRouter() *Router {
 		Handler:   mux,
 	}
 
-	// router.md = new(metadata.Cp_metadata)
-
-	return router
+	return router, nil
 }
 
 func (router *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
-	//fmt.Printf("%+v\n", req.Header)
-
-	md := new(metadata.Cp_metadata)
+	md := new(md.Cp_metadata)
 
 	md.ExtractMetadata(req)
 
 	sfpl.TransformSFCintoSFP(md)
 
-	// @author:marie
 	// Encode metadata as json and set header respectively
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(md)

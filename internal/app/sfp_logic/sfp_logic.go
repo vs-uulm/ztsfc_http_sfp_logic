@@ -3,8 +3,7 @@ package sfp_logic
 import (
 	"fmt"
 
-	"local.com/leobrada/ztsfc_http_sfpLogic/metadata"
-	md "local.com/leobrada/ztsfc_http_sfpLogic/metadata"
+	md "github.com/vs-uulm/ztsfc_http_sfp_logic/internal/app/metadata"
 )
 
 //func TransformSFCintoSFP(cpm *md.Cp_metadata) {
@@ -18,7 +17,7 @@ func TransformSFCintoSFP(cpm *md.Cp_metadata) {
 	}
 
 	if len(cpm.SFC) == 0 {
-		cpm.SFP = []metadata.SF{}
+		cpm.SFP = []md.SF{}
 		return
 	}
 
@@ -27,13 +26,13 @@ func TransformSFCintoSFP(cpm *md.Cp_metadata) {
 	for _, sfName := range cpm.SFC {
 		switch sfName {
 		case "dpi":
-			sf := metadata.SF{Name: "dpi", Address: "https://10.5.0.54:8888"}
+			sf := md.SF{Name: "dpi", Address: "https://10.5.0.54:8888"}
 			cpm.SFP = append(cpm.SFP, sf)
 		case "logger":
-			sf := metadata.SF{Name: "logger", Address: "https://10.5.0.50:8889"}
+			sf := md.SF{Name: "logger", Address: "https://10.5.0.50:8889"}
 			cpm.SFP = append(cpm.SFP, sf)
 		default:
-			sf := metadata.SF{Name: "", Address: ""}
+			sf := md.SF{Name: "", Address: ""}
 			cpm.SFP = append(cpm.SFP, sf)
 		}
 	}
