@@ -1,0 +1,7 @@
+sf_pool:
+  logger:
+    instance_urls:
+      - "https://logger.ztsfc.com:443"
+  dpi:
+    instance_urls:
+      - "https://dpi.ztsfc.com:443"

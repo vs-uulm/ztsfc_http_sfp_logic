@@ -15,4 +15,6 @@
 # vendor/
 main
 certs
+!certs/.gitkeep
 config/conf.yml
+policies/policies.yml

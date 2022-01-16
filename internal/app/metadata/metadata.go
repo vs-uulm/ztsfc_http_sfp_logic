@@ -10,14 +10,15 @@ type Cp_metadata struct {
 }
 type SF struct {
 	Name    string `json:"name"`
-	Address string `json:"address"`
+	URL string `json:"url"`
 }
 
-func (cpm *Cp_metadata) ExtractMetadata(req *http.Request) {
+func (cpm *Cp_metadata) ExtractMetadata(req *http.Request) error {
 
-	// @author:marie
 	// Retreive parameters from query instead from custom headers
 	// (SFC is transmitted as a list of several SFs)
-	cpm.SFC = req.URL.Query()["sf"]
+    // TODO: Error Handling???
+	cpm.SFC = req.URL.Query()["sfc"]
+    return nil
 	// cpm.SFC = req.Header.Get("sfc")
 }
