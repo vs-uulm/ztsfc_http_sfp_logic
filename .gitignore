@@ -14,7 +14,7 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 main
-certs
+certs/*
 !certs/.gitkeep
 config/conf.yml
 policies/policies.yml
