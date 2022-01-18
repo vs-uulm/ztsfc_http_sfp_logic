@@ -1,4 +1,4 @@
-package sfp_logic7
+package sfp_logic
 
 import (
     "errors"
