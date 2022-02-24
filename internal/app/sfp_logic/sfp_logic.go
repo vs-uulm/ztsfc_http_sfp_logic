@@ -22,15 +22,16 @@ func TransformSFCintoSFP(sysLogger *logger.Logger, cpm *md.Cp_metadata) error {
 	// reintroduced ip translation, but now provide it together wih SF name.
 	for _, sfName := range cpm.SFC {
 		switch sfName {
-		case "dpi":
-			sf := md.SF{Name: "dpi", URL: policies.Policies.SfPool["dpi"].InstanceURLs[0]}
+		case "ips":
+            sysLogger.Debugf("ips has been choosen: %s", policies.Policies.SfPool["ips"].InstanceURLs[0])
+			sf := md.SF{Name: "ips", URL: policies.Policies.SfPool["ips"].InstanceURLs[0]}
 			cpm.SFP = append(cpm.SFP, sf)
 		case "logger":
             sysLogger.Debugf("logger has been choosen: %s", policies.Policies.SfPool["logger"].InstanceURLs[0])
 			sf := md.SF{Name: "logger", URL: policies.Policies.SfPool["logger"].InstanceURLs[0]}
 			cpm.SFP = append(cpm.SFP, sf)
 		default:
-            sysLogger.Infof("sfp_logic: TransformSFCintoSFP(): there is an empty entry in the SFC slice. this could indicate an error")
+            sysLogger.Infof("sfp_logic: TransformSFCintoSFP(): there is an unknown SF stated in the SFC slice. this could indicate an error")
 			sf := md.SF{Name: "", URL: ""}
 			cpm.SFP = append(cpm.SFP, sf)
 		}
